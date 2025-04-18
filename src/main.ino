@@ -8,11 +8,11 @@
 
 void setup() {
   set_joystick_entries(A0, A1, 7); // Set the joystick pins
-
+  setup_display_infos(0x27, 0); // Set the I2C address and page number
+  
   Wire.begin();
   Serial.begin(9600);
 
-  setup_display_infos(0x27, 0); // Set the I2C address and page number
   display_page(0);
 }
 
