@@ -2,7 +2,7 @@
 #include <I2C_LCD.h>
 
 I2C_LCD LCD;
-uint8_t I2C_LCD_ADDRESS = 0x27; // Set the I2C base address for the LCD
+uint8_t I2C_LCD_ADDRESS = 0x51; // Set the I2C base address for the LCD
 
 int current_page = 0;
 
