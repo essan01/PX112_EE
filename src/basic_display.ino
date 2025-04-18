@@ -1,32 +1,44 @@
 #include <Wire.h>
 #include <I2C_LCD.h>
+#include <ctrl_joystick.h> 
+#include <Arduino.h>
+
 #define PAGE_NUMBER 5
 #define TT_LEN 10
 I2C_LCD LCD;
-uint8_t I2C_LCD_ADDRESS = 0x51; //Device address configuration, the default value is 0x51.
-
-//For detials of the function useage, please refer to "I2C_LCD User Manual". 
-//You can download the "I2C_LCD User Manual" from I2C_LCD WIKI page: http://www.seeedstudio.com/wiki/I2C_LCD
+uint8_t I2C_LCD_ADDRESS = 0x51; 
 
 int current_page = 0;
 int pg_count = 0;
 char title[PAGE_NUMBER][TT_LEN] = {{"BAD USB"},{"IR"},{"PONG"},{"setup"},{"cop mode"}};
 
-void dsp_page(int page){
-  LCD.CleanAll(WHITE);    //Clean the screen with black or white.
+
+
+void display_page(int page){
   LCD.FontModeConf(Font_6x8, FM_ANL_AAA, BLACK_BAC);
   LCD.CharGotoXY(0,0);       //Set the start coordinate.
-    LCD.print(title[page]);  
-  }
-void dsp_next_page(){
+  LCD.print(title[page]);  
+}
+
+void display_next_page(){
   current_page ++;
-  if (current_page>4){
+  if (current_page > 4){
     current_page = 0;
     }
-  dsp_page(current_page);
-  }
+  LCD.CleanAll(WHITE);    //Clean the screen with black or white.
+  display_page(current_page);
+}
+
+void display_previous_page(){
+  current_page --;
+  if (current_page < 0){
+    current_page = 4;
+    }
+  LCD.CleanAll(WHITE);    //Clean the screen with black or white.
+  display_page(current_page);
+}
   
-void dsp_list(){
+void diplay_list(){
   LCD.CleanAll(WHITE);    //Clean the screen with black or white.
   for(int i=0; i<5; i++){
     if(i==current_page){
@@ -43,20 +55,33 @@ void dsp_list(){
       LCD.CharGotoXY(0,(i-1)*8+20);
       }
     LCD.print(title[i]);
-    }
   }
-void setup(void)
-{
-    Wire.begin();         //I2C controller initialization.
 }
 
-void loop(void)
-{
-  dsp_list();
-  current_page ++;
-  if (current_page>4){
-    current_page = 0;
-    }
+void setup() {
+  set_joystick_entries(A0, A1, 7); // Set the joystick pins
 
-  delay(1000);
+  Wire.begin();
+
+  Serial.begin(9600);
+
+  display_page(current_page);
 }
+
+void loop() {
+
+  if (joytick_position_x() >= 4.9){
+    display_next_page();
+  }
+  if (joytick_position_x() <= 0.1){
+    display_previous_page();
+  }
+}
+
+
+
+
+
+
+
+
