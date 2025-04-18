@@ -7,7 +7,7 @@ uint8_t I2C_LCD_ADDRESS = 0x51; //Device address configuration, the default valu
 
 //For detials of the function useage, please refer to "I2C_LCD User Manual". 
 //You can download the "I2C_LCD User Manual" from I2C_LCD WIKI page: http://www.seeedstudio.com/wiki/I2C_LCD
-//blah blah test
+
 int current_page = 0;
 int pg_count = 0;
 char title[PAGE_NUMBER][TT_LEN] = {{"BAD USB"},{"IR"},{"PONG"},{"setup"},{"cop mode"}};
