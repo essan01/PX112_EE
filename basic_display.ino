@@ -1,5 +1,7 @@
 #include <Wire.h>
 #include <I2C_LCD.h>
+#include <ctrl_joystick.h> 
+#include <Arduino.h>
 
 #define PAGE_NUMBER 5
 #define TT_LEN 10
@@ -10,9 +12,7 @@ int current_page = 0;
 int pg_count = 0;
 char title[PAGE_NUMBER][TT_LEN] = {{"BAD USB"},{"IR"},{"PONG"},{"setup"},{"cop mode"}};
 
-int axeX = A0;
-int axeY = A1;
-int BP7 = 7;
+
 
 void display_page(int page){
   LCD.FontModeConf(Font_6x8, FM_ANL_AAA, BLACK_BAC);
@@ -59,10 +59,7 @@ void diplay_list(){
 }
 
 void setup() {
-  pinMode(axeX, INPUT);
-  pinMode(axeY, INPUT);
-  pinMode(BP7, INPUT);
-  digitalWrite(BP7, HIGH); 
+  set_joystick_entries(A0, A1, 7); // Set the joystick pins
 
   Wire.begin();
 
@@ -72,17 +69,13 @@ void setup() {
 }
 
 void loop() {
-  float X = analogRead(axeX) * (5.0 / 1023.0);
-  float Y = analogRead(axeY) * (5.0 / 1023.0);
 
-
-  if (X >= 4.9){
+  if (joytick_position_x() >= 4.9){
     display_next_page();
   }
-  if (X <= 0.1){
+  if (joytick_position_x() <= 0.1){
     display_previous_page();
   }
-
 }
 
 
