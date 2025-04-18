@@ -7,10 +7,8 @@ int current_page = 0;
 int pg_count = 0;
 char title[5][20] = {{"BAD USB"},{"IR"},{"PONG"},{"setup"},{"cop mode"}};
 
-void setup_display_infos(uint8_t screen_address, int page_number, int tt_len, int default_page) {
+void setup_display_infos(uint8_t screen_address, int default_page) {
     I2C_LCD_ADDRESS = screen_address; // Set the I2C address for the LCD
-    int PAGE_NUMBER = page_number;
-    int TT_LEN = tt_len;
     int current_page = default_page; // Set the default page to display
 
     LCD.Init(); // Initialize the LCD

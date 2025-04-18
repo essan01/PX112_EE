@@ -6,4 +6,4 @@ float joytick_position_x();
 float joytick_position_y();
 int button_pressed();
 
-#endif CTRL_JOYSTICK_H
+#endif
