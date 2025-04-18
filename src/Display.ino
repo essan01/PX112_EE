@@ -2,13 +2,14 @@
 #include <I2C_LCD.h>
 
 I2C_LCD LCD;
+uint8_t I2C_LCD_ADDRESS = 0x27; // Set the I2C base address for the LCD
 
 int current_page = 0;
 int pg_count = 0;
-char title[5][20] = {{"BAD USB"},{"IR"},{"PONG"},{"setup"},{"cop mode"}};
+char title[5][20] = {{"BAD USB"},{"IR"},{"PONG"},{"SETUP"},{"COP MODE"}};
 
 void setup_display_infos(uint8_t screen_address, int default_page) {
-    uint8_t I2C_LCD_ADDRESS = screen_address; // Set the I2C address for the LCD
+    I2C_LCD_ADDRESS = screen_address; // Set the I2C address for the LCD
     int current_page = default_page; // Set the default page to display
 
     LCD.Init(); // Initialize the LCD
