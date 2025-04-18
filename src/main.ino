@@ -12,7 +12,7 @@ void setup() {
   Wire.begin();
   Serial.begin(9600);
 
-
+  setup_display_infos(0x27, 5, 20, 0); // Set the I2C address and page number
   display_page(0);
 }
 
