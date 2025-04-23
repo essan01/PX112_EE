@@ -21,7 +21,7 @@ void display_page(int page){
     LCD.FontModeConf(Font_6x8, FM_ANL_AAA, BLACK_BAC);
     LCD.CharGotoXY(0,0);       //Set the start coordinate.
     LCD.print(title[page]);  
-  }
+}
   
 void display_next_page(){
     current_page ++;
@@ -40,23 +40,7 @@ void display_previous_page(){
     LCD.CleanAll(WHITE);    //Clean the screen with black or white.
     display_page(current_page);
 }
-    
-void diplay_list(){
-    LCD.CleanAll(WHITE);    //Clean the screen with black or white.
-    for(int i=0; i<5; i++){
-        if(i==current_page){
-            LCD.FontModeConf(Font_8x16_2, FM_ANL_AAA, WHITE_BAC);
-        }
-        else {
-            LCD.FontModeConf(Font_6x8, FM_ANL_AAA, BLACK_BAC);
-        }
-        
-        if(i<=current_page){
-        LCD.CharGotoXY(0,i*8+4);
-        } 
-        else{
-        LCD.CharGotoXY(0,(i-1)*8+20);
-        }
-        LCD.print(title[i]);
-    }
+
+int get_current_page(){
+    return current_page;
 }
