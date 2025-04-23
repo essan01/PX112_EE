@@ -6,7 +6,7 @@ uint8_t I2C_LCD_ADDRESS = 0x51; // Set the I2C base address for the LCD
 
 int current_page = 0;
 
-char title[5][20] = {{"BAD USB"},{"IR"},{"PONG"},{"SETUP"},{"COP MODE"}};
+char app_list[5][20] = {{"BAD USB"},{"IR"},{"PONG"},{"SETUP"},{"COP MODE"}};
 
 void setup_display_infos(uint8_t screen_address, int default_page) {
     I2C_LCD_ADDRESS = screen_address; // Set the I2C address for the LCD
@@ -18,9 +18,10 @@ void setup_display_infos(uint8_t screen_address, int default_page) {
 }
 
 void display_page(int page){
+    LCD.CleanAll(WHITE); // Clean the screen with white
     LCD.FontModeConf(Font_6x8, FM_ANL_AAA, BLACK_BAC);
     LCD.CharGotoXY(0,0);       //Set the start coordinate.
-    LCD.print(title[page]);  
+    LCD.print(app_list[page]);  
 }
   
 void display_next_page(){
@@ -43,4 +44,18 @@ void display_previous_page(){
 
 int get_current_page(){
     return current_page;
+}
+
+void display_list(int app_selected) {
+    LCD.CleanAll(WHITE); // Clean the screen with white
+    for(int i = 0; i < 5; i++){
+        if(i == app_selected){
+            LCD.FontModeConf(Font_6x8, FM_ANL_AAA, WHITE_BAC);
+        }
+        else {
+            LCD.FontModeConf(Font_6x8, FM_ANL_AAA, BLACK_BAC);
+        }
+        LCD.CharGotoXY(0,i*8+4);
+        LCD.print(app_list[i]);
+    }
 }

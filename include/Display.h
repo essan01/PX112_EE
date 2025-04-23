@@ -7,6 +7,6 @@ void display_page(int page);
 void display_next_page();
 void display_previous_page();
 int get_current_page();
-void diplay_list();
+void display_list(int app_selected);
 
 #endif
