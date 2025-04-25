@@ -8,6 +8,6 @@ void display_next_page();
 void display_previous_page();
 int get_current_page();
 void display_list(int app_selected);
-void set_app_list(char app_list[], int nb_pages);
+void set_app_list(char app_list[][20], int nb_pages);
 
 #endif

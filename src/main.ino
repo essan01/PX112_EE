@@ -5,7 +5,8 @@
 #include <Display.h>
 
 #define NB_PAGES 6 // Number of pages available
-char app_list[NB_PAGES][20] = {"MENU","BAD USB","IR","PONG","SETUP","COP MODE"};
+#define TEXT_LENGTH 20 // Length of the text to be displayed
+char app_list[NB_PAGES][TEXT_LENGTH] = {"MENU","BAD USB","IR","PONG","SETUP","COP MODE"};
 
 int app_selected = 0; // Variable to keep track of the selected app
 int page_selected = 0; // Variable to keep track of the current page
@@ -13,7 +14,7 @@ int page_selected = 0; // Variable to keep track of the current page
 void setup() {
   set_joystick_entries(A0, A1, 7); // Set the joystick pins
   setup_display_infos(0x51, 0); // Set the I2C address and page number
-  set_app_list(&app_list[0][0], NB_PAGES); // Set the app list
+  set_app_list(app_list, NB_PAGES); // Set the app list
   
   Wire.begin();
   Serial.begin(9600);
@@ -29,7 +30,7 @@ void loop() {
   case 0: // menu
     if (y > 4.9) { // If joystick is moved to the right
       app_selected++;
-      if (app_selected > 4) {
+      if (app_selected > NB_PAGES - 1) {
         app_selected = 0; // Loop back to the first app
       }
       display_list(app_selected); // Display the initial list of apps
@@ -37,7 +38,7 @@ void loop() {
     } else if (y < 0.1) { // If joystick is moved to the left
       app_selected--;
       if (app_selected < 0) {
-        app_selected = 4; // Loop back to the last app
+        app_selected = NB_PAGES - 1; // Loop back to the last app
       }
       display_list(app_selected); // Display the initial list of apps
     }
@@ -72,11 +73,3 @@ void loop() {
 
   
 }
-
-
-
-
-
-
-
-
