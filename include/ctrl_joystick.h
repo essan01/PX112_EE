@@ -2,8 +2,8 @@
 #define CTRL_JOYSTICK_H
 
 void set_joystick_entries(int x, int y, int button);
-float joytick_position_x();
-float joytick_position_y();
+float joystick_position_x();
+float joystick_position_y();
 int button_pressed();
 
 #endif
