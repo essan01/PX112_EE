@@ -3,6 +3,7 @@
 #include <ctrl_joystick.h> 
 #include <Arduino.h>
 #include <Display.h>
+#include <pong.h>
 
 #define NB_APPS 6 // Number of apps available
 char app_list[NB_APPS][20] = {"MENU","BAD USB","IR","PONG","SETUP","COP MODE"};
@@ -50,6 +51,10 @@ void loop() {
 
     if (button_pressed() || x > 4.9) { // If the button is pressed or joystick is moved right
       page_selected = app_selected; // Set the current page to the selected app
+
+      if (page_selected == 3) { // If the selected app is PONG
+        init_game(); // Initialize the game
+      }
     }
     break;
   
@@ -62,9 +67,9 @@ void loop() {
     break;
     
   case 3:
-    display_page(3); //replace with the function to display the app
+      game_loop(); // Call the game loop function
     break;
-    
+
   case 4:
     display_page(4); //replace with the function to display the app
     break;
