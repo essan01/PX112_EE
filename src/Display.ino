@@ -12,7 +12,7 @@ void setup_display_infos(uint8_t screen_address, int default_page) {
     I2C_LCD_ADDRESS = screen_address; // Set the I2C address for the LCD
     current_page = default_page; // Set the default page to display
 
-    LCD.WorkingModeConf(OFF, OFF, WM_CharMode); // Set the working mode of the LCD
+    LCD.WorkingModeConf(OFF, ON, WM_CharMode); // Set the working mode of the LCD
     
     LCD.Init(); // Initialize the LCD
     LCD.CleanAll(WHITE); // Clean the screen with white

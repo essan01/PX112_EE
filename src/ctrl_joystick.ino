@@ -15,13 +15,13 @@ void set_joystick_entries(int x, int y, int button) {
     digitalWrite(BP7, HIGH); 
 }
 
-float joytick_position_x() {
+float joystick_position_x() {
     int x = analogRead(axeX);
     float position = x * (5.0 / 1023.0);
     return position;
 }
 
-float joytick_position_y() {
+float joystick_position_y() {
     int y = analogRead(axeY);
     float position = y * (5.0 / 1023.0);
     return position;
