@@ -13,7 +13,9 @@ void setup_display_infos(uint8_t screen_address, int default_page) {
     current_page = default_page; // Set the default page to display
 
     LCD.WorkingModeConf(OFF, ON, WM_CharMode); // Set the working mode of the LCD
-    
+    LCD.BacklightConf(LOAD_TO_EEPROM, 100); // Set the backlight to 100
+    LCD.ContrastConf(LOAD_TO_EEPROM, 21); // Set the contrast to 21
+
     LCD.Init(); // Initialize the LCD
     LCD.CleanAll(WHITE); // Clean the screen with white
     display_page(current_page); // Display the first page

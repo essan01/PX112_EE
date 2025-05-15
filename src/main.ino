@@ -14,8 +14,9 @@ char app_list[NB_APPS][20] = {"MENU","BAD USB","IR","PONG","SETUP","COP MODE"};
 int parameter_selected = 0; // Variable to keep track of the selected parameter
 int app_selected = 0; // Variable to keep track of the selected app
 int page_selected = 0; // Variable to keep track of the current page
-
 long press_time;
+
+extern GUI_Bitmap_t bmowo;
 
 void setup() {
   set_joystick_entries(A0, A1, 7); // Set the joystick pins
@@ -62,7 +63,7 @@ void loop() {
 
       if (page_selected == 3) { // If the selected app is PONG
         init_game(); // Initialize the game
-        
+      }
       if (page_selected == 4) {
         display_parameters(0);
       }
@@ -108,6 +109,16 @@ void loop() {
 
     break;
     
+  case 5:
+    LCD.CleanAll(WHITE); // Clean the screen with white
+    LCD.WorkingModeConf(OFF, ON, WM_BitmapMode);
+    LCD.DrawScreenAreaAt(&bmowo, 30, 0);
+
+    while (!(x < 0.1)) {x = joystick_position_x();} // Wait for joystick to be moved to the left
+
+    LCD.WorkingModeConf(OFF, ON, WM_CharMode); // Set the working mode of the LCD
+    break;
+
   default:
     break;
   }  

@@ -36,7 +36,7 @@ void move_ball() {
 }
 
 void move_paddle() {
-    int y = joytick_position_y();
+    int y = joystick_position_y();
 
     if (y > 4.9) {
         paddle1_y += GAME_SPEED; // Move paddle 1 up
