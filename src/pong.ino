@@ -4,6 +4,7 @@
 
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
+#define GAME_SPEED 2
 
 int ball_x, ball_y; // Ball position
 int ball_dx, ball_dy; // Ball direction
@@ -14,8 +15,8 @@ void init_game() {
     LCD.CleanAll(BLACK); // Clear the screen
     ball_x = SCREEN_WIDTH / 2;
     ball_y = SCREEN_HEIGHT / 2;
-    ball_dx = 1;
-    ball_dy = 1;
+    ball_dx = GAME_SPEED;
+    ball_dy = GAME_SPEED;
     paddle1_x = 10;
     paddle1_y = SCREEN_HEIGHT / 2;
     paddle2_x = SCREEN_WIDTH - 10;
@@ -38,12 +39,12 @@ void move_paddle() {
     int y = joytick_position_y();
 
     if (y > 4.9) {
-        paddle1_y += 1; // Move paddle 1 up
+        paddle1_y += GAME_SPEED; // Move paddle 1 up
         if (paddle1_y > SCREEN_HEIGHT - 20) {
             paddle1_y = SCREEN_HEIGHT - 20; // Prevent going out of bounds
         }
     } else if (y < 0.1) {
-        paddle1_y -= 1; // Move paddle 1 down
+        paddle1_y -= GAME_SPEED; // Move paddle 1 down
         if (paddle1_y < 0) {
             paddle1_y = 0; // Prevent going out of bounds
         }
@@ -53,12 +54,12 @@ void move_paddle() {
 void move_ai_paddle() {
     // Simple AI for paddle 2
     if (ball_y > paddle2_y + 10) {
-        paddle2_y += 1; // Move paddle 2 down
+        paddle2_y += GAME_SPEED; // Move paddle 2 down
         if (paddle2_y > SCREEN_HEIGHT - 20) {
             paddle2_y = SCREEN_HEIGHT - 20; // Prevent going out of bounds
         }
     } else if (ball_y < paddle2_y + 10) {
-        paddle2_y -= 1; // Move paddle 2 up
+        paddle2_y -= GAME_SPEED; // Move paddle 2 up
         if (paddle2_y < 0) {
             paddle2_y = 0; // Prevent going out of bounds
         }
