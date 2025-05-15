@@ -33,22 +33,22 @@ void loop() {
   
   switch (page_selected) {
   case 0: // menu
-    if (y > 4.9) { // If joystick is moved to the right
+    if (y > 4.9) { // If joystick is moved up
       app_selected++;
       if (app_selected > NB_APPS - 1) {
         app_selected = 0; // Loop back to the first app
       }
-      display_list(app_selected); // Display the initial list of apps
+      display_list(app_selected); // Display the list of apps
 
-    } else if (y < 0.1) { // If joystick is moved to the left
+    } else if (y < 0.1) { // If joystick is moved down
       app_selected--;
       if (app_selected < 0) {
         app_selected = NB_APPS - 1; // Loop back to the last app
       }
-      display_list(app_selected); // Display the initial list of apps
+      display_list(app_selected); // Display the list of apps
     }
 
-    if (button_pressed()) { // If the button is pressed
+    if (button_pressed() || x > 4.9) { // If the button is pressed or joystick is moved right
       page_selected = app_selected; // Set the current page to the selected app
     }
     break;
