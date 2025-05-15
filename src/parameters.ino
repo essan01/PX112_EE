@@ -8,14 +8,15 @@
 #define nb_parameters 2 // Number of parameters available
 
 
-int backlight_value;
+int backlight_value = 100;
+int contrast_value = 21;
 
 char parameters[nb_parameters][20] = {
     "Back light",
     "Contrast",
 };
 
-int parameters_states[nb_parameters] = {0, 0}; // Array to hold parameter values
+int parameters_states[nb_parameters] = {100, 21}; // Array to hold parameter values
 
 int current_parameter = 0; // Variable to keep track of the selected parameter
 
@@ -65,6 +66,33 @@ void change_state(int parameter_selected) {
                 parameters_states[0] = backlight_value;
                 LCD.BacklightConf(LOAD_TO_RAM, backlight_value);
                 display_parameters(0); // Update the display
+            }
+        }
+    }
+
+    if (parameter_selected == 1) {
+        
+        while (!button_pressed()) {
+            int x = joystick_position_x(); // Get the joystick X position
+
+            if (x > 4.9) {
+                contrast_value++;
+                if (contrast_value > 63) {
+                    contrast_value = 63;
+                }
+                parameters_states[1] = contrast_value;
+                LCD.ContrastConf(LOAD_TO_RAM, contrast_value);
+                display_parameters(1); // Update the display
+            }
+            
+            if (x < 0.1) {
+                contrast_value--;
+                if (contrast_value < 0) {
+                    contrast_value = 0;
+                }
+                parameters_states[1] = contrast_value;
+                LCD.ContrastConf(LOAD_TO_RAM, contrast_value);
+                display_parameters(1); // Update the display
             }
         }
     }

@@ -34,7 +34,7 @@ void loop() {
   if (x < 0.1) {
     LCD.CleanAll(WHITE); // Clean the screen with white
     page_selected = 0; // If joystick is moved to the left, go to menu
-    app_selected = 0; // Reset app selection
+    // app_selected = 0; // Reset app selection
     display_list(app_selected); // Display the initial list of apps
   }
   
@@ -78,7 +78,7 @@ void loop() {
     break;
     
   case 4:
-  
+
     if (y > 4.9) { // If joystick is moved up
       parameter_selected++;
       if (parameter_selected > NB_PARAMETERS - 1) {
