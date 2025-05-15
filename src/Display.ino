@@ -57,7 +57,7 @@ int get_current_page(){
 }
 
 void display_list(int app_selected) {
-    LCD.CleanAll(WHITE); // Clean the screen with white
+    // LCD.CleanAll(WHITE); // Clean the screen with white
     for(int i = 0; i < _nb_pages; i++){
         if(i == app_selected){
             LCD.FontModeConf(Font_6x8, FM_ANL_AAA, WHITE_BAC);

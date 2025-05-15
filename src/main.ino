@@ -32,6 +32,7 @@ void loop() {
   int y = joystick_position_y(); // Get the joystick Y position
 
   if (x < 0.1) {
+    LCD.CleanAll(WHITE); // Clean the screen with white
     page_selected = 0; // If joystick is moved to the left, go to menu
     app_selected = 0; // Reset app selection
     display_list(app_selected); // Display the initial list of apps
@@ -55,8 +56,11 @@ void loop() {
       display_list(app_selected); // Display the list of apps
     }
 
-    if (x > 4.9) { // If the button is pressed or joystick is moved right
+    if (button_pressed()) { // If the button is pressed
       page_selected = app_selected; // Set the current page to the selected app
+      if (page_selected == 4) {
+        display_parameters(0);
+      }
     }
 
     break;
@@ -74,8 +78,7 @@ void loop() {
     break;
     
   case 4:
-    // display_parameters(0);
-
+  
     if (y > 4.9) { // If joystick is moved up
       parameter_selected++;
       if (parameter_selected > NB_PARAMETERS - 1) {
@@ -92,8 +95,9 @@ void loop() {
       display_parameters(parameter_selected); // Display the parameters
     }
 
-    if (button_pressed() && millis() - press_time > 100) { // If the button is pressed and held for more than 1 second
+    if (x > 4.9 && millis() - press_time > 100) { // If the button is pressed and held for more than 0.1 second
       press_time = millis(); // Record the time of the button press
+      LCD.CleanAll(WHITE); // Clean the screen with white
       change_state(parameter_selected); // Change the state of the selected parameter
     }
 

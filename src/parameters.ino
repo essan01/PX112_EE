@@ -7,7 +7,8 @@
 
 #define nb_parameters 2 // Number of parameters available
 
-int x = joystick_position_x(); // Get the joystick X position
+
+int backlight_value;
 
 char parameters[nb_parameters][20] = {
     "Back light",
@@ -25,7 +26,6 @@ void display_parameters(int parameter_selected) {
 }
 
 void display_parameters_list(int parameter_selected) {
-    LCD.CleanAll(WHITE); // Clean the screen with white
     LCD.CharGotoXY(0, 0); // Set the start coordinate
     
     for (int i = 0; i < nb_parameters; i++) {
@@ -41,11 +41,12 @@ void display_parameters_list(int parameter_selected) {
 }
 
 void change_state(int parameter_selected) {
-
     //Slider for backlight
     if (parameter_selected == 0) {
-        int backlight_value = parameters_states[0];
+        
         while (!button_pressed()) {
+            int x = joystick_position_x(); // Get the joystick X position
+
             if (x > 4.9) {
                 backlight_value++;
                 if (backlight_value > 127) {
@@ -54,8 +55,9 @@ void change_state(int parameter_selected) {
                 parameters_states[0] = backlight_value;
                 LCD.BacklightConf(LOAD_TO_RAM, backlight_value);
                 display_parameters(0); // Update the display
-
-            } else if (x < 0.1) {
+            }
+            
+            if (x < 0.1) {
                 backlight_value--;
                 if (backlight_value < 0) {
                     backlight_value = 0;
