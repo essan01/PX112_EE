@@ -6,7 +6,7 @@ uint8_t I2C_LCD_ADDRESS = 0x51; // Set the I2C base address for the LCD
 
 int current_page = 0;
 
-char title[5][20] = {{"BAD USB"},{"IR"},{"PONG"},{"SETUP"},{"COP MODE"}};
+char title[6][20] = {{"BAD USB"},{"IR"},{"PONG"},{"SETUP"},{"COP MODE"},{"settings"}}; // Titles for each page
 
 void setup_display_infos(uint8_t screen_address, int default_page) {
     I2C_LCD_ADDRESS = screen_address; // Set the I2C address for the LCD
