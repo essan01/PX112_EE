@@ -1,6 +1,9 @@
+#include <IRremote.hpp>
 #include <display.h>
+#include "IR.h"
+
 //uses IRremote to send basic off signal for denon nec and samsung
-extern GUI_Bitmap_t accontroller; //Declare bitmap data packet.
+extern GUI_Bitmap_t bmcontroller; //Declare bitmap data packet.
 
 const int DELAY_AFTER_SEND = 10;
 
@@ -49,6 +52,6 @@ void app_IR() {
     LCD.CharGotoXY(0,0);       //Set the start coordinate.
     LCD.print("Hello World!");  //Display "Hello World!" on coordinate of (0, 10).
     LCD.WorkingModeConf(ON, ON, WM_BitmapMode);
-    LCD.DrawScreenAreaAt(&accontroller, 30, 0);
+    LCD.DrawScreenAreaAt(&bmcontroller, 30, 0);
 
 }

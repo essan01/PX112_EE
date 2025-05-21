@@ -5,6 +5,7 @@
 #include <Display.h>
 #include <pong.h>
 #include <parameters.h>
+#include <IR.h>
 
 #include <IRremote.hpp> 
 
@@ -103,7 +104,7 @@ void loop() {
 
   case 2:
     
-    //app_IR();
+    app_IR();
     break;
     
   case 3:
