@@ -53,5 +53,6 @@ void app_IR() {
     LCD.print("Hello World!");  //Display "Hello World!" on coordinate of (0, 10).
     LCD.WorkingModeConf(ON, ON, WM_BitmapMode);
     LCD.DrawScreenAreaAt(&bmcontroller, 30, 0);
+    LCD.WorkingModeConf(OFF, ON, WM_CharMode);
 
 }
