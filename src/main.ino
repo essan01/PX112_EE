@@ -1,5 +1,5 @@
 #include <Wire.h>
-#include <I2C_LCD.h>
+
 #include <ctrl_joystick.h> 
 #include <Arduino.h>
 #include <Display.h>
