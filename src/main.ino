@@ -9,7 +9,7 @@
 #define NB_APPS 6 // Number of apps available
 #define NB_PARAMETERS 2 // Number of parameters available
 
-char app_list[NB_APPS][20] = {"MENU","BAD USB","IR","PONG","SETUP","COP MODE"};
+char app_list[NB_APPS][20] = {"MENU","RFID","IR","PONG","SETUP","COP MODE"};
 
 int app_selected = 0; // Variable to keep track of the selected app
 int page_selected = 0; // Variable to keep track of the current page
