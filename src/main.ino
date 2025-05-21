@@ -6,6 +6,10 @@
 #include <pong.h>
 #include <parameters.h>
 
+#include <IRremote.hpp> 
+
+
+
 #define NB_APPS 6 // Number of apps available
 #define NB_PARAMETERS 2 // Number of parameters available
 
@@ -24,6 +28,25 @@ void setup() {
   
   Wire.begin();
   Serial.begin(9600);
+
+  #if defined(IR_SEND_PIN)
+    IrSender.begin(); // Start with IR_SEND_PIN -which is defined in PinDefinitionsAndMore.h- as send pin and enable feedback LED at default feedback LED pin
+//    disableLEDFeedback(); // Disable feedback LED at default feedback LED pin
+#  if defined(IR_SEND_PIN_STRING)
+    Serial.println(F("Send IR signals at pin " IR_SEND_PIN_STRING));
+#  else
+    Serial.println(F("Send IR signals at pin " STR(IR_SEND_PIN)));
+#  endif
+#else
+
+    // Here the macro IR_SEND_PIN is not defined or undefined above with #undef IR_SEND_PIN
+    uint8_t tSendPin = 3;
+    IrSender.begin(tSendPin, ENABLE_LED_FEEDBACK, USE_DEFAULT_FEEDBACK_LED_PIN); // Specify send pin and enable feedback LED at default feedback LED pin
+    // You can change send pin later with IrSender.setSendPin();
+
+    Serial.print(F("Send IR signals at pin "));
+    Serial.println(tSendPin);
+#endif
 
   display_list(0); // Display the initial list of apps
 }
@@ -75,11 +98,12 @@ void loop() {
     break;
     
   case 1:
-    
+
     break;
 
   case 2:
     
+    //app_IR();
     break;
     
   case 3:
