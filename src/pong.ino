@@ -7,7 +7,7 @@
 #define GAME_SPEED 2
 
 int ball_x, ball_y; // Ball position
-int ball_dx, ball_dy; // Ball direction
+float ball_dx, ball_dy; // Ball direction
 int paddle1_x, paddle1_y; // Paddle 1 position
 int paddle2_x, paddle2_y; // Paddle 2 position
 
@@ -69,10 +69,10 @@ void move_ai_paddle() {
 void check_collision() {
     // Check for collision between ball and paddles
     if (ball_x <= paddle1_x + 2 && ball_x >= paddle1_x && ball_y <= paddle1_y + 20 && ball_y >= paddle1_y) {
-        ball_dx = -ball_dx; // Reverse direction
+        ball_dx = -ball_dx; // Reverse direction and increase speed
     }
     if (ball_x <= paddle2_x + 2 && ball_x >= paddle2_x && ball_y <= paddle2_y + 20 && ball_y >= paddle2_y) {
-        ball_dx = -ball_dx; // Reverse direction
+        ball_dx = -ball_dx; // Reverse direction and increase speed
     }
 }
 

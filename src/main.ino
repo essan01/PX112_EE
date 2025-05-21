@@ -11,12 +11,11 @@
 
 char app_list[NB_APPS][20] = {"MENU","BAD USB","IR","PONG","SETUP","COP MODE"};
 
-int parameter_selected = 0; // Variable to keep track of the selected parameter
 int app_selected = 0; // Variable to keep track of the selected app
 int page_selected = 0; // Variable to keep track of the current page
-long press_time;
+long time; // Variables to keep track of time
 
-extern GUI_Bitmap_t bmowo;
+extern GUI_Bitmap_t bmowo; // Bitmap for the image
 
 void setup() {
   set_joystick_entries(A0, A1, 7); // Set the joystick pins
@@ -36,13 +35,14 @@ void loop() {
   if (x < 0.1) {
     LCD.CleanAll(WHITE); // Clean the screen with white
     page_selected = 0; // If joystick is moved to the left, go to menu
-    // app_selected = 0; // Reset app selection
+    // app_selected = 0; // Reset app selection when going back to menu
     display_list(app_selected); // Display the initial list of apps
   }
   
   switch (page_selected) {
   case 0: // menu
-    if (y > 4.9) { // If joystick is moved up
+    if (y > 4.9 && millis() - time > 200) { // If joystick is moved up
+      time = millis(); // Record the time of the joystick movement
       app_selected++;
       if (app_selected > NB_APPS - 1) {
         app_selected = 0; // Loop back to the first app
@@ -50,7 +50,8 @@ void loop() {
       display_list(app_selected); // Display the list of apps
     }
 
-    if (y < 0.1) { // If joystick is moved down
+    if (y < 0.1 && millis() - time > 200) { // If joystick is moved down
+      time = millis(); // Record the time of the joystick movement
       app_selected--;
       if (app_selected < 0) {
         app_selected = NB_APPS - 1; // Loop back to the last app
@@ -65,6 +66,8 @@ void loop() {
         init_game(); // Initialize the game
       }
       if (page_selected == 4) {
+        LCD.CleanAll(WHITE); // Clean the screen with white
+        parameters_setup(); // Set up the parameters
         display_parameters(0);
       }
     }
@@ -72,41 +75,19 @@ void loop() {
     break;
     
   case 1:
-    display_page(1); //replace with the function to display the app
+    
     break;
 
   case 2:
-    display_page(2); //replace with the function to display the app
+    
     break;
     
   case 3:
-      game_loop(); // Call the game loop function
+    game_loop(); // Call the game loop function
     break;
 
   case 4:
-
-    if (y > 4.9) { // If joystick is moved up
-      parameter_selected++;
-      if (parameter_selected > NB_PARAMETERS - 1) {
-        parameter_selected = 0; // Loop back to the first parameter
-      }
-      display_parameters(parameter_selected); // Display the parameters
-    }
-    
-    if (y < 0.1) { // If joystick is moved down
-      parameter_selected--;
-      if (parameter_selected < 0) {
-        parameter_selected = NB_PARAMETERS - 1; // Loop back to the last parameter
-      }
-      display_parameters(parameter_selected); // Display the parameters
-    }
-
-    if (x > 4.9 && millis() - press_time > 100) { // If the button is pressed and held for more than 0.1 second
-      press_time = millis(); // Record the time of the button press
-      LCD.CleanAll(WHITE); // Clean the screen with white
-      change_state(parameter_selected); // Change the state of the selected parameter
-    }
-
+    parameters_loop(x, y);
     break;
     
   case 5:

@@ -5,31 +5,54 @@
 #include <Display.h>
 #include <ctrl_joystick.h>
 
-#define nb_parameters 2 // Number of parameters available
+#define NB_PARAMETERS 2 // Number of parameters available
 
+int backlight_value = 100; // Default backlight value
+int contrast_value = 21; // Default contrast value
+long timer; // Variable to keep track of time
+int selected_parameter = 0; // Variable to keep track of the selected parameter
 
-int backlight_value = 100;
-int contrast_value = 21;
-
-char parameters[nb_parameters][20] = {
+char parameters[NB_PARAMETERS][20] = {
     "Back light",
     "Contrast",
 };
 
-int parameters_states[nb_parameters] = {100, 21}; // Array to hold parameter values
+int parameters_states[NB_PARAMETERS] = {100, 21}; // Array to hold parameter values
 
-int current_parameter = 0; // Variable to keep track of the selected parameter
-
-void display_parameters(int parameter_selected) {
-    LCD.CleanAll(WHITE); // Clean the screen with white
-
-    display_parameters_list(parameter_selected);// Display the list of parameters
+void parameters_setup() {
+    selected_parameter = 0; // Initialize the current parameter
 }
 
-void display_parameters_list(int parameter_selected) {
+void parameters_loop(int x, int y) {
+    if (y > 4.9 && millis() - timer > 200) { // If joystick is moved up
+      timer = millis(); // Record the time of the joystick movement
+      selected_parameter++;
+      if (selected_parameter > NB_PARAMETERS - 1) {
+        selected_parameter = 0; // Loop back to the first parameter
+      }
+      display_parameters(selected_parameter); // Display the parameters
+    }
+
+    if (y < 0.1 && millis() - timer > 200) { // If joystick is moved down
+      timer = millis(); // Record the time of the joystick movement
+      selected_parameter--;
+      if (selected_parameter < 0) {
+        selected_parameter = NB_PARAMETERS - 1; // Loop back to the last parameter
+      }
+      display_parameters(selected_parameter); // Display the parameters
+    }
+
+    if (x > 4.9 && millis() - timer > 100) { // If the button is pressed and held for more than 0.1 second
+      timer = millis(); // Record the time of the button press
+      LCD.CleanAll(WHITE); // Clean the screen with white
+      change_state(selected_parameter); // Change the state of the selected parameter
+    }
+}
+
+void display_parameters(int parameter_selected) {
     LCD.CharGotoXY(0, 0); // Set the start coordinate
     
-    for (int i = 0; i < nb_parameters; i++) {
+    for (int i = 0; i < NB_PARAMETERS; i++) {
         if (i == parameter_selected) {
             LCD.print("-> "); // Indicate the selected parameter
         } else {
@@ -70,6 +93,7 @@ void change_state(int parameter_selected) {
         }
     }
 
+    //Slider for contrast
     if (parameter_selected == 1) {
         
         while (!button_pressed()) {
