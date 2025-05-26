@@ -61,6 +61,7 @@ void loop() {
     page_selected = 0; // If joystick is moved to the left, go to menu
     // app_selected = 0; // Reset app selection when going back to menu
     display_list(app_selected); // Display the initial list of apps
+    app_ir_launched = 0;
   }
   
   switch (page_selected) {
@@ -103,8 +104,9 @@ void loop() {
     break;
 
   case 2:
-    
-    app_IR();
+    if (!app_ir_launched){
+      app_IR();
+    }
     break;
     
   case 3:
