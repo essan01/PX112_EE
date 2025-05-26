@@ -68,6 +68,7 @@ void loop() {
       if (page_selected == 3) { // If the selected app is PONG
         init_game(); // Initialize the game
       }
+      
       if (page_selected == 4) {
         LCD.CleanAll(WHITE); // Clean the screen with white
         parameters_setup(); // Set up the parameters
