@@ -9,8 +9,6 @@
 
 #include <IRremote.hpp> 
 
-
-
 #define NB_APPS 6 // Number of apps available
 #define NB_PARAMETERS 2 // Number of parameters available
 
