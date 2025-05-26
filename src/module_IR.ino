@@ -1,7 +1,7 @@
 #include <IRremote.hpp>
 #include <display.h>
 #include "IR.h"
-
+bool app_ir_launched = 0;
 //uses IRremote to send basic off signal for denon nec and samsung
 extern GUI_Bitmap_t bmcontroller; //Declare bitmap data packet.
 
@@ -44,15 +44,53 @@ void send_brand(uint16_t sAddress,uint8_t sCommand, uint8_t sRepeats, int brand)
 
 
 void app_IR() {
+    int brand_selector = 0;
+    int brand = 0;
+    int cursor_position =0;
+    uint16_t sAddress;
+    uint8_t sCommand;
+    app_ir_launched = 1;
     LCD.CleanAll(WHITE);    //Clean the screen with black or white.
 
     //8*16 font size��auto new line��black character on white back ground.
     LCD.FontModeConf(Font_6x8, FM_ANL_AAA, BLACK_BAC); 
     LCD.WorkingModeConf(ON, ON, WM_CharMode);
     LCD.CharGotoXY(0,0);       //Set the start coordinate.
-    LCD.print("Hello World!");  //Display "Hello World!" on coordinate of (0, 10).
-    LCD.WorkingModeConf(ON, ON, WM_BitmapMode);
-    LCD.DrawScreenAreaAt(&bmcontroller, 30, 0);
-    LCD.WorkingModeConf(OFF, ON, WM_CharMode);
-
+    LCD.print("select brand");  //Display "Hello World!" on coordinate of (0, 10).
+    while (joystick_position_x()<4.9){
+        if (joystick_position_y()>4.9){
+            brand++;
+            LCD.CharGotoXY(80,0);       //Set the start coordinate.
+            LCD.print(brand);  //Display "Hello World!" on coordinate of (0, 10).
+        }
+        if(brand>=4){
+            brand = 0;
+        }
+    }
+    LCD.CleanAll(WHITE);    //Clean the screen with black or white.
+    LCD.print("select address"); 
+        while (joystick_position_x()<4.9){
+        LCD.print(sAddress,HEX);
+        if (button_pressed()){
+            cursor_position ++;
+        }
+        if (joystick_position_y()>4){
+            sAddress = sAddress + (16^cursor_position);
+        }
+        if (cursor_position >= 2) {
+            cursor_position = 0;
+        }
+    cursor_position = 0; 
+    LCD.CleanAll(WHITE);    //Clean the screen with black or white.
+        LCD.print(sCommand,HEX);
+        if (button_pressed()){
+            cursor_position ++;
+        }
+        if (joystick_position_y()>4){
+            sCommand = sCommand + (16^cursor_position);
+        }
+        if (cursor_position >= 3) {
+            cursor_position = 0;
+        }
+    }
 }
