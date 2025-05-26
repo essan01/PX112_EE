@@ -1,7 +1,6 @@
 #include "parameters.h"
 
 #include <Arduino.h>
-#include <I2C_LCD.h>
 #include <Display.h>
 #include <ctrl_joystick.h>
 
@@ -59,7 +58,7 @@ void display_parameters(int parameter_selected) {
             LCD.print("   "); // No indication for unselected parameters
         }
         LCD.print(parameters[i]); // Display each parameter
-        LCD.print(": " + String(parameters_states[i])); // Display the state of each parameter
+        LCD.print(": " + String(parameters_states[i]) + " "); // Display the state of each parameter
         LCD.CharGotoXY(0, i*8+8); // Move to the next line
     }
 }
