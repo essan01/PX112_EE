@@ -1,5 +1,6 @@
 #include <IRremote.hpp>
 #include <display.h>
+#include <ctrl_joystick.h>
 #include "IR.h"
 bool app_ir_launched = 0;
 //uses IRremote to send basic off signal for denon nec and samsung
@@ -56,19 +57,20 @@ void app_IR() {
     LCD.FontModeConf(Font_6x8, FM_ANL_AAA, BLACK_BAC); 
     LCD.WorkingModeConf(ON, ON, WM_CharMode);
     LCD.CharGotoXY(0,0);       //Set the start coordinate.
-    LCD.print("select brand");  //Display "Hello World!" on coordinate of (0, 10).
+    LCD.print("Select brand 0");  //Display "Hello World!" on coordinate of (0, 10).
     while (joystick_position_x()<4.9){
         if (joystick_position_y()>4.9){
             brand++;
-            LCD.CharGotoXY(80,0);       //Set the start coordinate.
-            LCD.print(brand);  //Display "Hello World!" on coordinate of (0, 10).
+            LCD.CharGotoXY(0,0);       //Set the start coordinate.
+            // LCD.print(brand);
+            LCD.print("Select brand " + String(brand));
         }
         if(brand>=4){
             brand = 0;
         }
     }
     LCD.CleanAll(WHITE);    //Clean the screen with black or white.
-    LCD.print("select address"); 
+    LCD.print("Select address"); 
         while (joystick_position_x()<4.9){
         LCD.print(sAddress,HEX);
         if (button_pressed()){
